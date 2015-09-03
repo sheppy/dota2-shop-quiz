@@ -41,6 +41,26 @@ Promise.all([api1Request, api2Request]).spread(function(items, itemData) {
         _.extend(item, found);
     });
 }).then(function (items) {
+    // Check if there is a recipe needed as a component
+    return _.each(items, function(item) {
+        // Check it does not already have
+        var hasRecipe = !!_.find(item.components, function (i) {
+            return ~i.indexOf("recipe");
+        });
+
+        if (!hasRecipe) {
+            var nameToFind = item.name.replace(/^item_/, "item_recipe_");
+
+            var recipe = _.result(_.findWhere(items, { name: nameToFind }), "name");
+            if (recipe) {
+                item.components.push(recipe.replace(/^item_/, ""));
+            }
+        }
+
+        // TODO: Remove:
+        // recipe_ward_dispenser
+    });
+}).then(function (items) {
     console.log("Saved " + items.length + " items");
     fs.writeFileSync("dist/items.json", JSON.stringify(items));
     return items;

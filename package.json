@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/fetch & gulp",
+    "fetch": "node src/fetch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

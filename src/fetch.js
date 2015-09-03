@@ -48,6 +48,7 @@ Promise.all([api1Request, api2Request]).spread(function(items, itemData) {
             return ~i.indexOf("recipe");
         });
 
+        // See if there is a recipe if it does not already have one
         if (!hasRecipe) {
             var nameToFind = item.name.replace(/^item_/, "item_recipe_");
 
@@ -57,8 +58,10 @@ Promise.all([api1Request, api2Request]).spread(function(items, itemData) {
             }
         }
 
-        // TODO: Remove:
-        // recipe_ward_dispenser
+        // Remove odd unused recipe
+        _.remove(item.components, function () {
+            return name === "recipe_ward_dispenser";
+        });
     });
 }).then(function (items) {
     console.log("Saved " + items.length + " items");

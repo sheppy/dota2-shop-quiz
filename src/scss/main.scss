@@ -1,0 +1,26 @@
+.Item {
+    &-Image {}
+
+    &-Tooltip {
+        text-align: left;
+    }
+
+    &-Title {}
+    &-Description {}
+    &-Attributes {}
+    &-Attribute {}
+}
+
+.Choices,
+.Guesses {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+
+    > li {
+        display: inline-block;
+    }
+}
+
+.Stats {}

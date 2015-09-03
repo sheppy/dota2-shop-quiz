@@ -1,0 +1,20 @@
+<figure class="Item {% if item.selected %}is-selected{% endif %}">
+    <img class="Item-image" src="img/{{ item.img }}" alt="{{ item.localized_name }}">
+    <figcaption class="Item-Tooltip">
+        <h2 class="Item-Title">{{ item.localized_name }}</h2>
+
+        {% if item.lore %}
+            <p class="Item-Lore">{{ item.lore }}</p>
+        {% endif %}
+
+        {% if item.desc %}
+            <p class="Item-Description">{% raw %}{{ item.desc }}{% endraw %}</p>
+        {% endif %}
+
+        {% if item.attrib %}
+            <div class="Item-Attributes">
+                {% raw %}{{ item.attrib }}{% endraw %}
+            </div>
+        {% endif %}
+    </figcaption>
+</figure>

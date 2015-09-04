@@ -7,6 +7,11 @@ var writeFile = Promise.promisify(fs.writeFile);
 
 var API_KEY = fs.readFileSync("API.key", "UTF-8").replace(/\s/gm, "");
 
+var FAKE_RECIPES = [
+    "recipe_ward_dispenser",
+    "recipe_arcane_boots"
+];
+
 var api1Request = request({
     url: "https://api.steampowered.com/IEconDOTA2_570/GetGameItems/V001/",
     qs: {
@@ -58,9 +63,9 @@ Promise.all([api1Request, api2Request]).spread(function(items, itemData) {
             }
         }
 
-        // Remove odd unused recipe
-        _.remove(item.components, function () {
-            return name === "recipe_ward_dispenser";
+        // Remove odd unused recipes
+        _.remove(item.components, function (name) {
+            return ~FAKE_RECIPES.indexOf(name);
         });
     });
 }).then(function (items) {

@@ -2,16 +2,34 @@ var _ = require("lodash");
 
 var items = require("../../dist/items.json");
 
-var possibleItems = _.filter(items, function(item) {
-    return item.created;
-});
+var possibleItems = _.chain(items)
+    .filter(function(item) {
+        // Only items that are created
+        return item.created;
+    }).each(function(item) {
+        // Change all component recipes to be called recipe
+        if (item.components) {
+            _.each(item.components, function(component, n) {
+                item.components[n] = component.replace(/^recipe(_.+)$/, "recipe");
+            });
+        }
+    })
+    .value();
 
-var possibleComponents = _.reduce(items, function(components, item) {
-    if (item.components) {
-        return _.uniq(components.concat(item.components));
-    }
-    return components;
-}, []);
+var possibleComponents = _.chain(items)
+    .reduce(function(components, item) {
+        // Get all the components as a single array
+        if (item.components) {
+            return components.concat(item.components);
+        }
+        return components;
+    }, [])
+    .reduce(function(components, component) {
+        components.push(component.replace(/^recipe(_.+)$/, "recipe"));
+        return components;
+    }, [])
+    .uniq()
+    .value();
 
 
 console.log("Total Items: ", items.length);

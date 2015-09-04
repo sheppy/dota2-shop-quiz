@@ -9,13 +9,14 @@ module.exports = {
     dir: {
         src: "src",
         dist: "dist",
-        page: "src/swig/page"
+        js: "js",
+        page: "template/page"
     },
     file: {
         vendorJs: "vendor.js"
     },
 
     libs: [
-        "pixi.js"
+        "lodash"
     ]
 };

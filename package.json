@@ -31,6 +31,7 @@
     "gulp-load-plugins": "^1.0.0-rc.1",
     "gulp-swig": "^0.7.4",
     "lodash": "^3.10.1",
-    "request": "^2.61.0"
+    "request": "^2.61.0",
+    "require-dir": "^0.3.0"
   }
 }

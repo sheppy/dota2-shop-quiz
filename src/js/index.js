@@ -1,6 +1,9 @@
 var _ = require("lodash");
+var swig = require("swig");
 
 var items = require("../../dist/items.json");
+
+var itemTemplate = require("../template/partial/item.html");
 
 var possibleItems = _.chain(items)
     .filter(function(item) {
@@ -55,3 +58,10 @@ componentChoices = _.shuffle(componentChoices);
 console.log("Make Item: ", roundItems[0].localized_name);
 console.log("Components: ", roundItems[0].components);
 console.log("Choices: ", componentChoices);
+
+// Render the item
+var html = swig.render(itemTemplate, {
+    locals: {item: roundItems[0]}
+});
+
+document.querySelector("#main").innerHTML = html;

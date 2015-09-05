@@ -4,17 +4,17 @@
         <h2 class="Item-Title">{{ item.localized_name }}</h2>
 
         {% if item.lore %}
-            <p class="Item-Lore">{{ item.lore }}</p>
+        <p class="Item-Lore">{{ item.lore }}</p>
         {% endif %}
 
         {% if item.desc %}
-            <p class="Item-Description">{% raw %}{{ item.desc }}{% endraw %}</p>
+        <p class="Item-Description">{% autoescape false %}{{ item.desc }}{% endautoescape %}</p>
         {% endif %}
 
         {% if item.attrib %}
-            <div class="Item-Attributes">
-                {% raw %}{{ item.attrib }}{% endraw %}
-            </div>
+        <div class="Item-Attributes">
+            {% autoescape false %}{{ item.attrib }}{% endautoescape %}
+        </div>
         {% endif %}
     </figcaption>
 </figure>

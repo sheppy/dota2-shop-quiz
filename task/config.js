@@ -17,6 +17,7 @@ module.exports = {
     },
 
     libs: [
-        "lodash"
+        "lodash",
+        "swig"
     ]
 };

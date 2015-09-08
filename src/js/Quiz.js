@@ -99,6 +99,14 @@ Quiz.prototype.initRound = function () {
     // Always add recipe as last item
     round.choices.push(this.recipeItem);
 
+    // Set up guesses
+    round.guesses = [];
+    _.each(round.item.components, function () {
+        round.guesses.push({
+            item: false
+        });
+    });
+
     return round;
 };
 

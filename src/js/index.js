@@ -5,7 +5,9 @@ var Quiz = require("./Quiz");
 
 var items = require("../../dist/items.json");
 
-var itemTemplate = require("../template/partial/item.html");
+require("../template/partial/item.html");
+require("../template/partial/choices.html");
+var quizTemplate = require("../template/partial/quiz.html");
 
 
 // Create the quiz
@@ -24,7 +26,8 @@ console.log("Components: ", round.item.components);
 console.log("Choices: ", round.choices);
 
 // Render the item
-var html = swig.render(itemTemplate, {
+//var html = swig.render(itemTemplate, {
+var html = swig.render(quizTemplate, {
     locals: round
 });
 

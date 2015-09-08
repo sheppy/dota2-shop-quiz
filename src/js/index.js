@@ -5,6 +5,7 @@ var items = require("../../dist/items.json");
 
 var itemTemplate = require("../template/partial/item.html");
 
+// Possible items for the quiz item
 var possibleItems = _.chain(items)
     .filter(function(item) {
         // Only items that are created
@@ -19,6 +20,20 @@ var possibleItems = _.chain(items)
     })
     .value();
 
+// Find a recipe item
+var recipeItem = _.chain(items)
+    .find(function (item) {
+        return item.name.match(/^item_recipe(_.+)$/);
+    })
+    .tap(function (item) {
+        item.name = "recipe";
+        item.localized_name = "Recipe";
+        delete item.cost;
+        delete item.id;
+    })
+    .value();
+
+// Possible components to make
 var possibleComponents = _.chain(items)
     .reduce(function(components, item) {
         // Get all the components as a single array
@@ -27,10 +42,10 @@ var possibleComponents = _.chain(items)
         }
         return components;
     }, [])
-    .reduce(function(components, component) {
-        components.push(component.replace(/^recipe(_.+)$/, "recipe"));
-        return components;
-    }, [])
+    .remove(function(component) {
+        // Remove recipes
+        return !component.match(/^recipe(_.+)$/);
+    })
     .uniq()
     .value();
 
@@ -46,14 +61,36 @@ var roundItems = _.shuffle(possibleItems);
 var itemToMake = roundItems[0];
 
 // Randomly choose some components
-var componentChoices = _.clone(itemToMake.components);
-var numComponents = 6;
+var componentChoices = _.chain(itemToMake.components)
+    .clone()
+    .remove(function (component) {
+        return component !== "recipe";
+    })
+    .value();
+var numComponents = 8;
+
+console.log("initial choices", componentChoices);
 
 while (componentChoices.length < numComponents) {
-    componentChoices.push(possibleComponents[_.random(possibleComponents.length - 1)]);
+    var item = possibleComponents[_.random(possibleComponents.length - 1)];
+    componentChoices.push(item);
 }
 
-componentChoices = _.shuffle(componentChoices);
+componentChoices = _.chain(componentChoices)
+    .shuffle()
+    .reduce(function (components, itemName) {
+        // Get actual items for componentChoices
+        var item = _.findWhere(items, {name: "item_" + itemName});
+        if (item) {
+            components.push(item);
+        }
+        return components;
+    }, [])
+    .value();
+
+
+// Always add recipe
+componentChoices.push(recipeItem);
 
 console.log("Make Item: ", roundItems[0].localized_name);
 console.log("Components: ", roundItems[0].components);
@@ -61,7 +98,9 @@ console.log("Choices: ", componentChoices);
 
 // Render the item
 var html = swig.render(itemTemplate, {
-    locals: {item: roundItems[0]}
+    locals: {
+        item: roundItems[0]
+    }
 });
 
 document.querySelector("#main").innerHTML = html;

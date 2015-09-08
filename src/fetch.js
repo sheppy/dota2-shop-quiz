@@ -8,8 +8,8 @@ var writeFile = Promise.promisify(fs.writeFile);
 var API_KEY = fs.readFileSync("API.key", "UTF-8").replace(/\s/gm, "");
 
 var FAKE_RECIPES = [
-    "recipe_ward_dispenser",
-    "recipe_arcane_boots"
+    //"recipe_ward_dispenser",
+    //"recipe_arcane_boots"
 ];
 
 var api1Request = request({
@@ -48,7 +48,7 @@ Promise.all([api1Request, api2Request]).spread(function(items, itemData) {
 }).then(function (items) {
     // Check if there is a recipe needed as a component
     return _.each(items, function(item) {
-        // Check it does not already have
+        // Check it does not already have a recipe
         var hasRecipe = !!_.find(item.components, function (i) {
             return ~i.indexOf("recipe");
         });
@@ -57,9 +57,9 @@ Promise.all([api1Request, api2Request]).spread(function(items, itemData) {
         if (!hasRecipe) {
             var nameToFind = item.name.replace(/^item_/, "item_recipe_");
 
-            var recipe = _.result(_.findWhere(items, { name: nameToFind }), "name");
-            if (recipe) {
-                item.components.push(recipe.replace(/^item_/, ""));
+            var recipe = _.findWhere(items, { name: nameToFind });
+            if (recipe && recipe.name && recipe.cost) {
+                item.components.push(recipe.name.replace(/^item_/, ""));
             }
         }
 

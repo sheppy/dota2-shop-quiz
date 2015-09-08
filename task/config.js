@@ -10,6 +10,8 @@ module.exports = {
         src: "src",
         dist: "dist",
         js: "js",
+        css: "css",
+        scss: "scss",
         page: "template/page"
     },
     file: {

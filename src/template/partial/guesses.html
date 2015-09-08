@@ -3,7 +3,11 @@
         {% if guess.item %}
             <li>{% include "./item.swig" guess.item %}</li>
         {% else %}
-            <li>TODO: Placeholder</li>
+            <li>
+                <figure class="Item">
+                    <span class="Item-Image">?</span>
+                </figure>
+            </li>
         {% endif %}
     {% endfor %}
 </ul>

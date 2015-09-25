@@ -1,5 +1,5 @@
 var gulp = require("gulp");
 
-gulp.task("build", ["html", "css", "js"]);
+gulp.task("build", ["html", "css", "vendor", "js"]);
 
 gulp.task("default", ["build", "server"]);

@@ -12,7 +12,8 @@ module.exports = {
         js: "js",
         css: "css",
         scss: "scss",
-        page: "template/page"
+        page: "template/page",
+        template: "template"
     },
     file: {
         vendorJs: "vendor.js"

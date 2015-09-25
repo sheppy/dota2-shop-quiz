@@ -26,10 +26,10 @@
   "homepage": "https://github.com/sheppy/dota2-shop-quiz",
   "devDependencies": {
     "bluebird": "^2.9.34",
+    "browser-sync": "^2.9.6",
     "browserify": "^11.0.1",
     "bundle-collapser": "^1.2.1",
     "gulp": "^3.9.0",
-    "gulp-connect": "^2.2.0",
     "gulp-load-plugins": "^1.0.0-rc.1",
     "gulp-sass": "^2.0.4",
     "gulp-swig": "^0.7.4",

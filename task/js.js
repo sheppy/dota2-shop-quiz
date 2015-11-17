@@ -6,7 +6,6 @@ import through2 from "through2";
 import browserify from "browserify";
 import babelify from "babelify";
 import exposify from "exposify";
-import swigify from "swigify";
 
 import config from "./config";
 
@@ -43,7 +42,6 @@ gulp.task("js", function () {
             },
             filePattern: /\.jsx?$/
         })
-        .transform(swigify())
         .bundle(function (err, res) {
             if (err) {
                 return next(err);

@@ -19,9 +19,9 @@ gulp.task("server", function () {
     });
 
     gulp.watch(path.join(config.dir.src, config.dir.scss, config.glob.scss), ["css"]);
-    gulp.watch(path.join(config.dir.src, config.dir.js, config.glob.js), ["js"]);
     gulp.watch([
-        path.join(config.dir.src, config.dir.template, config.glob.swig),
-        path.join(config.dir.src, config.dir.template, config.glob.html)
-    ], ["html"]);
+        path.join(config.dir.src, config.dir.js, config.glob.js),
+        path.join(config.dir.src, config.dir.js, config.glob.jsx)
+    ], ["js"]);
+    gulp.watch(path.join(config.dir.src, "html", config.glob.html), ["html"]);
 });

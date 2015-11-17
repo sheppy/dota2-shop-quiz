@@ -4,7 +4,8 @@ const config = {
         swig: "**/*.swig",
         css: "**/*.css",
         scss: "**/*.scss",
-        js: "**/*.js"
+        js: "**/*.js",
+        jsx: "**/*.jsx"
     },
     dir: {
         src: "src",
@@ -17,12 +18,7 @@ const config = {
     },
     file: {
         vendorJs: "vendor.js"
-    },
-
-    libs: [
-        "lodash",
-        "swig"
-    ]
+    }
 };
 
 export default config;

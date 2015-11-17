@@ -40,6 +40,20 @@ class Items {
         });
     }
 
+    trimItemData(items) {
+        return _.each(items, function (item) {
+            delete item.id;
+            delete item.secret_shop;
+            delete item.side_shop;
+            delete item.dname;
+            delete item.qual;
+            delete item.notes;
+            delete item.mc;
+            delete item.cd;
+            delete item.cost;
+        });
+    }
+
     saveJson(items) {
         console.log("Saved " + items.length + " items");
         return writeFile("dist/items.json", JSON.stringify(items)).then(function () {

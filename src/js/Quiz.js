@@ -6,9 +6,7 @@ function Quiz(items) {
         img: "recipe_lg.png",
         localized_name: "Recipe",
         name: "recipe",
-        recipe: 1,
-        secret_shop: 0,
-        side_shop: 0
+        recipe: 1
     };
 
     // The item pool used in the round

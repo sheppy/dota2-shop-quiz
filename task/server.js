@@ -1,7 +1,7 @@
-var gulp = require("gulp");
-var path = require("path");
-var config = require("./config");
-var browserSync = require("browser-sync");
+import path from "path";
+import gulp from "gulp";
+import browserSync from "browser-sync";
+import config from "./config";
 
 gulp.task("server", function () {
     browserSync({

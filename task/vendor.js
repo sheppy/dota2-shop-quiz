@@ -1,10 +1,13 @@
-var path = require("path");
-var gulp = require("gulp");
-var config = require("./config");
-var bundleCollapser = require("bundle-collapser/plugin");
-var source = require("vinyl-source-stream");
-var buffer = require("vinyl-buffer");
-var browserify = require("browserify");
+import path from "path";
+import gulp from "gulp";
+import gulpLoadPlugins from "gulp-load-plugins";
+import bundleCollapser from "bundle-collapser/plugin";
+import source from "vinyl-source-stream";
+import buffer from "vinyl-buffer";
+import browserify from "browserify";
+import config from "./config";
+
+const plugins = gulpLoadPlugins();
 
 gulp.task("vendor", function () {
     var b = browserify({
@@ -17,6 +20,7 @@ gulp.task("vendor", function () {
     });
 
     return b.bundle()
+        .pipe(plugins.plumber())
         .pipe(source(config.file.vendorJs))
         .pipe(buffer())
         .pipe(gulp.dest(path.join(config.dir.dist, config.dir.js)));

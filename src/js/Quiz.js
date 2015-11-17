@@ -1,4 +1,4 @@
-var _ = require("lodash");
+import _ from "lodash";
 
 function Quiz(items) {
     this.items = items;

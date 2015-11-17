@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
     glob: {
         html: "**/*.html",
         swig: "**/*.swig",
@@ -24,3 +24,5 @@ module.exports = {
         "swig"
     ]
 };
+
+export default config;

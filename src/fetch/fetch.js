@@ -1,7 +1,7 @@
 var Promise = require("bluebird");
 var request = Promise.promisify(require("request"));
 var fs = require("fs");
-var _ = require("lodash");
+import _ from "lodash";
 
 var writeFile = Promise.promisify(fs.writeFile);
 

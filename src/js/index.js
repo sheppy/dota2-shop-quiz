@@ -1,12 +1,6 @@
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
 
-import store from "./core/store";
-import {AppContainer} from "./components/App.jsx";
+import Provider from "./provider.jsx";
 
-ReactDOM.render(
-    <Provider store={store}>
-        <AppContainer/>
-    </Provider>
-    , document.getElementById("app"));
+ReactDOM.render(Provider, document.getElementById("app"));
 

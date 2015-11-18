@@ -14,7 +14,8 @@ const config = {
         css: "css",
         scss: "scss",
         page: "template/page",
-        template: "template"
+        template: "template",
+        test: "test"
     },
     file: {
         vendorJs: "vendor.js"

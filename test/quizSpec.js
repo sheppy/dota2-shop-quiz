@@ -10,39 +10,106 @@ chai.use(sinonChai);
 
 
 import {List, Map} from "immutable";
+import * as Quiz from "../src/js/core/quiz";
 
 
-function setItems(state, items) {
-    return state.set("items", List(items));
-}
+describe("Quiz", () => {
+    describe("initialise", () => {
+        it("sets the buildable items", () => {
+            const state = Map();
+            const item1 = {
+                name: "Item 1",
+                created: true
+            };
+            const item2 = {
+                name: "Item 2",
+                created: false
+            };
+            const nextState = Quiz.initialise(state, List.of(Map(item1), Map(item2)));
 
-function getNextItem(state) {
-    let items = state.get("items");
-    let item = state.get("items").first();
-    return state.set("item", item).set("items", items.shift());
-}
+            nextState.get("buildable").should.equal(List.of(Map(item1)));
+        });
 
-describe("setItems", () => {
-    it("adds the items to the state", () => {
-        const state = Map();
-        const items = List.of("Item 1", "Item 2");
-        const nextState = setItems(state, items);
+        it("fixes buildable items recipes to be called recipe", () => {
+            const state = Map();
+            const item1 = {
+                name: "Item 1",
+                created: true,
+                components: List.of("recipe_test")
+            };
+            const item2 = {
+                name: "Item 2",
+                created: false
+            };
+            const nextState = Quiz.initialise(state, List.of(Map(item1), Map(item2)));
 
-        nextState.should.equal(Map({
-            items: List.of("Item 1", "Item 2")
-        }));
+            nextState.get("buildable").should.equal(List.of(Map({
+                name: "Item 1",
+                created: true,
+                components: List.of("recipe")
+            })));
+        });
+
+        it("sets the available component items", () => {
+            const state = Map();
+            const item1 = {
+                name: "Item 1",
+                created: true,
+                components: [
+                    "Item 2",
+                    "Item 3"
+                ]
+            };
+            const item2 = {
+                name: "Item 2",
+                created: false
+            };
+            const nextState = Quiz.initialise(state, List.of(Map(item1), Map(item2)));
+
+            nextState.get("components").should.equal(List.of("Item 2", "Item 3"));
+        });
+
+        it("removes recipes from available components", () => {
+
+            const state = Map();
+            const item1 = {
+                name: "Item 1",
+                created: true,
+                components: [
+                    "Item 2",
+                    "Item 3",
+                    "recipe_test"
+                ]
+            };
+            const nextState = Quiz.initialise(state, List.of(Map(item1)));
+
+            nextState.get("components").should.equal(List.of("Item 2", "Item 3"));
+        });
+
+        it.skip("initialises the round", () => {});
+
+        it.skip("initialises the score", () => {});
+    });
+
+
+    describe.skip("start", () => {
+        // it starts the round
     });
 });
 
-describe("getNextItem", () => {
-    it("gets the next item to guess", () => {
-        const items = List.of("Item 1", "Item 2", "Item 3");
-        const state = setItems(Map(), items);
-        const nextState = getNextItem(state);
 
-        nextState.should.equal(Map({
-            item: "Item 1",
-            items: List.of("Item 2", "Item 3")
-        }));
-    });
-});
+
+// EXAMPLE
+const intialState = {
+    buildable: [],
+    components: [],
+
+    round: {
+        item: {},
+        items: []
+    },
+
+    score: {
+        guesses: 0
+    }
+};

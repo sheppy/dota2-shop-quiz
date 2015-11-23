@@ -32,8 +32,8 @@ function getComponentItems(items) {
 }
 
 export function initialise(state, items) {
-    const buildable = getBuildableItems(items);
-    const components = getComponentItems(items);
-
-    return state.merge({ buildable, components });
+    return state.merge({
+        buildable: getBuildableItems(items),
+        components: getComponentItems(items)
+    });
 }

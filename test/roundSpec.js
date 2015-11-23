@@ -15,7 +15,7 @@ import * as Round from "../src/js/core/round";
 
 describe("Round", () => {
     describe("start", () => {
-        it("increases the round number", () => {
+        it.only("increases the round number", () => {
             const round = Map({ number: 0, items: List.of("Item 1", "Item 2", "Item 3") });
             const state = Map({ round });
             const nextState = Round.start(state);

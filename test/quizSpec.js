@@ -98,6 +98,41 @@ describe("Quiz", () => {
 });
 
 
+/*
+
+ export function shuffleItems(state) {
+ let items = state.get("items").toArray();
+ items = _.shuffle(items);
+ return state.set("items", List(items));
+ }
+
+
+ describe("shuffleItems", () => {
+ it("changes the item order", () => {
+ const items = List.of("Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7");
+ const state = Map({
+ items: items
+ });
+ const nextState = Quiz.shuffleItems(state);
+
+ nextState.get("items").should.have.size(7);
+ nextState.get("items").should.include("Item 1");
+ nextState.get("items").should.include("Item 2");
+ nextState.get("items").should.include("Item 3");
+ nextState.get("items").should.include("Item 4");
+ nextState.get("items").should.include("Item 5");
+ nextState.get("items").should.include("Item 6");
+ nextState.get("items").should.include("Item 7");
+
+ nextState.should.not.equal(Map({
+ items: items
+ }));
+ });
+ });
+
+ */
+
+
 
 // EXAMPLE
 const intialState = {
@@ -110,6 +145,8 @@ const intialState = {
     },
 
     score: {
-        guesses: 0
+        guessesLeft: 3,
+        score: 0,
+        row: 0
     }
 };

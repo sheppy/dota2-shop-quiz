@@ -31,9 +31,34 @@ function getComponentItems(items) {
         .filter(component => !component.match(REGEX_RECIPE_NAME));  // Remove recipes
 }
 
+function shuffleItems(items) {
+    return List(_.shuffle(items.toArray()));
+}
+
+function getInitialRound(buildable) {
+    return Map({
+        item: Map(),
+        items: shuffleItems(buildable),
+        number: 0,
+        guesses: List()
+    });
+}
+
+function getInitialScore() {
+    return Map({
+        guessesLeft: 3,
+        score: 0,
+        row: 0
+    });
+}
+
 export function initialise(state, items) {
+    const buildable = getBuildableItems(items);
+
     return state.merge({
-        buildable: getBuildableItems(items),
-        components: getComponentItems(items)
+        buildable: buildable,
+        components: getComponentItems(items),
+        round: getInitialRound(buildable),
+        score: getInitialScore()
     });
 }

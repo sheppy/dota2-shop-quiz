@@ -15,36 +15,45 @@ import * as Quiz from "../src/js/core/quiz";
 
 describe("Quiz", () => {
     describe("initialise", () => {
+        const item1 = Map({
+            name: "Item 1",
+            created: true,
+            components: List.of("Item 2", "Item 3")
+        });
+        const item2 = Map({
+            name: "Item 2",
+            created: false
+        });
+        const item3 = Map({
+            name: "Item 3",
+            created: true,
+            components: List.of("recipe_test")
+        });
+        const item4 = Map({
+            name: "Item 4",
+            created: true,
+            components: List.of("Item 2", "recipe_test", "Item 3")
+        });
+        const item5 = Map({ name: "Item 5", created: true });
+        const item6 = Map({ name: "Item 6", created: true });
+        const item7 = Map({ name: "Item 7", created: true });
+        const item8 = Map({ name: "Item 8", created: true });
+        const item9 = Map({ name: "Item 9", created: true });
+
+
         it("sets the buildable items", () => {
             const state = Map();
-            const item1 = {
-                name: "Item 1",
-                created: true
-            };
-            const item2 = {
-                name: "Item 2",
-                created: false
-            };
-            const nextState = Quiz.initialise(state, List.of(Map(item1), Map(item2)));
+            const nextState = Quiz.initialise(state, List.of(item1, item2));
 
-            nextState.get("buildable").should.equal(List.of(Map(item1)));
+            nextState.get("buildable").should.equal(List.of(item1));
         });
 
         it("fixes buildable items recipes to be called recipe", () => {
             const state = Map();
-            const item1 = {
-                name: "Item 1",
-                created: true,
-                components: List.of("recipe_test")
-            };
-            const item2 = {
-                name: "Item 2",
-                created: false
-            };
-            const nextState = Quiz.initialise(state, List.of(Map(item1), Map(item2)));
+            const nextState = Quiz.initialise(state, List.of(item2, item3));
 
             nextState.get("buildable").should.equal(List.of(Map({
-                name: "Item 1",
+                name: "Item 3",
                 created: true,
                 components: List.of("recipe")
             })));
@@ -52,85 +61,54 @@ describe("Quiz", () => {
 
         it("sets the available component items", () => {
             const state = Map();
-            const item1 = {
-                name: "Item 1",
-                created: true,
-                components: [
-                    "Item 2",
-                    "Item 3"
-                ]
-            };
-            const item2 = {
-                name: "Item 2",
-                created: false
-            };
-            const nextState = Quiz.initialise(state, List.of(Map(item1), Map(item2)));
+            const nextState = Quiz.initialise(state, List.of(item1, item2));
 
             nextState.get("components").should.equal(List.of("Item 2", "Item 3"));
         });
 
         it("removes recipes from available components", () => {
-
             const state = Map();
-            const item1 = {
-                name: "Item 1",
-                created: true,
-                components: [
-                    "Item 2",
-                    "Item 3",
-                    "recipe_test"
-                ]
-            };
-            const nextState = Quiz.initialise(state, List.of(Map(item1)));
+            const nextState = Quiz.initialise(state, List.of(item4));
 
             nextState.get("components").should.equal(List.of("Item 2", "Item 3"));
         });
 
-        it.skip("initialises the round", () => {});
+        it("initialises the round item", () => {
+            const state = Map();
+            const nextState = Quiz.initialise(state, List());
+            const round = nextState.get("round");
 
-        it.skip("initialises the score", () => {});
-    });
+            round.get("item").should.be.instanceof(Map);
+            round.get("item").should.have.size(0);
+        });
 
+        it("initialises the round items", () => {
+            const state = Map();
+            const nextState = Quiz.initialise(state, List.of(item1, item2, item5, item6, item7, item8, item9));
+            const round = nextState.get("round");
 
-    describe.skip("start", () => {
-        // it starts the round
+            round.get("items").should.have.size(6);
+            round.get("items").should.include(item1);
+            round.get("items").should.include(item5);
+            round.get("items").should.include(item6);
+            round.get("items").should.include(item7);
+            round.get("items").should.include(item8);
+            round.get("items").should.include(item9);
+
+            round.get("items").should.not.equal(List.of(item1, item5, item6, item7, item8, item9));
+        });
+
+        it("initialises the score", () => {
+            const state = Map();
+            const nextState = Quiz.initialise(state, List());
+            const score = nextState.get("score");
+
+            score.get("guessesLeft").should.equal(3);
+            score.get("score").should.equal(0);
+            score.get("row").should.equal(0);
+        });
     });
 });
-
-
-/*
-
- export function shuffleItems(state) {
- let items = state.get("items").toArray();
- items = _.shuffle(items);
- return state.set("items", List(items));
- }
-
-
- describe("shuffleItems", () => {
- it("changes the item order", () => {
- const items = List.of("Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7");
- const state = Map({
- items: items
- });
- const nextState = Quiz.shuffleItems(state);
-
- nextState.get("items").should.have.size(7);
- nextState.get("items").should.include("Item 1");
- nextState.get("items").should.include("Item 2");
- nextState.get("items").should.include("Item 3");
- nextState.get("items").should.include("Item 4");
- nextState.get("items").should.include("Item 5");
- nextState.get("items").should.include("Item 6");
- nextState.get("items").should.include("Item 7");
-
- nextState.should.not.equal(Map({
- items: items
- }));
- });
- });
-
- */
 
 
 
@@ -141,7 +119,8 @@ const intialState = {
 
     round: {
         item: {},
-        items: []
+        items: [],
+        guesses: []
     },
 
     score: {

@@ -118,8 +118,10 @@ const intialState = {
     components: [],
 
     round: {
+        number: 1,
         item: {},
         items: [],
+        choices: [],
         guesses: []
     },
 

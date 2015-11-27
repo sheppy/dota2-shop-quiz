@@ -92,29 +92,70 @@ describe("Round", () => {
 
     describe("addItem", () => {
         it("adds an item to the guesses", () => {
-            const round = Map({ guesses: List() });
-            const state = Map({ round });
-
-            const nextState = Round.addItem(state, item1);
-            const nextRound = nextState.get("round");
-            const guesses = nextRound.get("guesses");
-
-            guesses.should.have.size(1);
-        });
-
-        it("adds another item to the guesses", () => {
-            const round = Map({ guesses: List(item2) });
+            const item = item1.merge({ components: List.of("Item 2", "Item 3") });
+            const round = Map({ item, guesses: List() });
             const state = Map({ round });
 
             const nextState = Round.addItem(state, item2);
             const nextRound = nextState.get("round");
             const guesses = nextRound.get("guesses");
 
+            guesses.should.have.size(1);
+            guesses.should.include(item2);
+        });
+
+        it("adds another item to the guesses", () => {
+            const item = item1.merge({ components: List.of("Item 2", "Item 3", "Item 4") });
+            const round = Map({ item, guesses: List.of(item2) });
+            const state = Map({ round });
+
+            const nextState = Round.addItem(state, item3);
+            const nextRound = nextState.get("round");
+            const guesses = nextRound.get("guesses");
+
             guesses.should.have.size(2);
+            guesses.should.include(item3);
+        });
+
+        it("indicates if not all the guesses are correct", () => {
+            const item = item1.merge({ components: List.of("Item 2", "Item 3", "Item 4") });
+            const round = Map({ item, guesses: List.of(item2, item3) });
+            const state = Map({ round });
+
+            const nextState = Round.addItem(state, item6);
+            const nextRound = nextState.get("round");
+            const guesses = nextRound.get("guesses");
+
+            guesses.should.have.size(3);
+        });
+
+        it("starts a new round if the guesses were correct", () => {
+            const item = item1.merge({ components: List.of("Item 2", "Item 3", "Item 4") });
+            const items = List.of(item5, item6, item7);
+            const roundItems = List.of(item2, item3, item4);
+            const round = Map({ number: 1, items: roundItems, item, guesses: List.of(item2, item3) });
+            const state = Map({ round, items, components });
+
+            const nextState = Round.addItem(state, item4);
+            const nextRound = nextState.get("round");
+            const guesses = nextRound.get("guesses");
+
+            nextRound.get("item").should.equal(item2);
+            nextRound.get("number").should.equal(2);
         });
     });
 
-    describe.skip("removeItem", () => {
+    describe("removeItem", () => {
+        it("removes the item from the guesses", () => {
+            const round = Map({ guesses: List.of(item2, item3, item4) });
+            const state = Map({ round });
 
+            const nextState = Round.removeItem(state, item3);
+            const nextRound = nextState.get("round");
+            const guesses = nextRound.get("guesses");
+
+            guesses.should.have.size(2);
+            guesses.should.not.include(item3);
+        });
     });
 });

@@ -12,7 +12,7 @@ class Quiz extends React.Component {
 
                 <div>
                     <h3>Item</h3>
-                    <Item {...this.props.item}/>
+                    <Item {...this.props.item.toObject()}/>
                 </div>
 
                 <div>
@@ -21,7 +21,7 @@ class Quiz extends React.Component {
                     <ul>
                         {this.props.guesses.map((guess, index) =>
                             <li key={index}>
-                                <Item {...guess}/>
+                                <Item {...guess.toObject()}/>
                             </li>
                         )}
                     </ul>
@@ -32,7 +32,7 @@ class Quiz extends React.Component {
                     <ul>
                         {this.props.choices.map((choice, index) =>
                             <li key={index}>
-                                <Item {...choice}/>
+                                <Item {...choice.toObject()}/>
                             </li>
                         )}
                     </ul>

@@ -56,7 +56,10 @@ export function initialise(state, items) {
     const buildable = getBuildableItems(items);
 
     return state.merge({
+        loading: false,
+        loaded: true,
         buildable: buildable,
+        items: items,
         components: getComponentItems(items),
         round: getInitialRound(buildable),
         score: getInitialScore()

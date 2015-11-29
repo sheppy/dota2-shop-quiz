@@ -6,6 +6,12 @@ import { fetchItems } from "../actions";
 
 function mapStateToProps(state) {
     return {
+        loading: state.quiz.get("loading"),
+        loaded: state.quiz.get("loaded"),
+        round: state.quiz.get("round"),
+    };
+
+    return {
         ready: state.quiz.get("loaded"),
         items: state.items,
 
@@ -21,11 +27,16 @@ class App extends React.Component {
     }
 
     render() {
-        // <h1>The Shopkeeper's Quiz</h1>
         return (
             <main>
-                {this.props.ready &&
-                    <Quiz items={this.props.items} buildable={this.props.buildable} components={this.props.components}/>
+                <h1>The Shopkeeper's Quiz</h1>
+
+                {this.props.loading &&
+                    <p>Loading...</p>
+                }
+
+                {this.props.loaded &&
+                    <Quiz {...this.props}/>
                 }
             </main>
         )

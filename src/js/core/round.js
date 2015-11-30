@@ -10,7 +10,7 @@ export const NUMBER_OF_COMPONENTS = 8;
 export const recipeItem = Map({
     img: "recipe_lg.png",
     localized_name: "Recipe",
-    name: "recipe",
+    name: "item_recipe",
     recipe: 1
 });
 

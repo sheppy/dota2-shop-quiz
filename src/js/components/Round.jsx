@@ -1,6 +1,8 @@
 import React from "react";
 
 import Item from "./Item.jsx";
+import Guesses from "./Guesses.jsx";
+import Choices from "./Choices.jsx";
 
 
 class Quiz extends React.Component {
@@ -8,34 +10,18 @@ class Quiz extends React.Component {
         return (
             <div>
                 <h2>Round {this.props.number}</h2>
-                <p>Remaining Items: {this.props.items.size}</p>
 
                 <div>
                     <h3>Item</h3>
                     <Item {...this.props.item.toObject()}/>
                 </div>
 
-                <div>
-                    <h3>Guesses ({this.props.guesses.size})</h3>
-
-                    <ul>
-                        {this.props.guesses.map((guess, index) =>
-                            <li key={index}>
-                                <Item {...guess.toObject()}/>
-                            </li>
-                        )}
-                    </ul>
-                </div>
+                <Guesses items={this.props.guesses} />
+                <Choices items={this.props.choices} />
 
                 <div>
-                    <h3>Choices ({this.props.choices.size})</h3>
-                    <ul>
-                        {this.props.choices.map((choice, index) =>
-                            <li key={index}>
-                                <Item {...choice.toObject()}/>
-                            </li>
-                        )}
-                    </ul>
+                    <h3>Stats</h3>
+                    <p>Remaining Items: {this.props.items.size}</p>
                 </div>
             </div>
         )

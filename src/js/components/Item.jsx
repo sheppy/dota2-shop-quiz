@@ -10,7 +10,7 @@ class Item extends React.Component {
 
         return (
             <figure className={itemClass}>
-                <img className="Item-Image" src={"img/" + this.props.img} alt={this.props.localized_name} />
+                <img className="Item-Image" src={"ixmg/" + this.props.img} alt={this.props.localized_name} />
 
                 <figcaption className="Item-Tooltip">
                     <h2 className="Item-Title">{this.props.localized_name}</h2>
@@ -20,7 +20,7 @@ class Item extends React.Component {
                     }
 
                     {this.props.desc &&
-                        <p className="Item-Item-Description" dangerouslySetInnerHTML={{__html: this.props.desc}} />
+                        <p className="Item-Description" dangerouslySetInnerHTML={{__html: this.props.desc}} />
                     }
 
                     {this.props.attrib &&

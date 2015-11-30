@@ -1,47 +1,5 @@
-body {
-    background: #252525;
-    color: #fff;
-    text-align: center;
-}
-
-.Item {
-    width: 85px;
-    height: 64px;
-    display: inline-block;
-    margin: 10px;
-    border: 2px solid #999;
-    border-radius: 10px;
-
-    &-Image {
-        background: #000;
-        width: 100%;
-        height: 100%;
-        display: block;
-        border-radius: 10px;
-        line-height: 64px;
-        font-size: 50px;
-    }
-
-    &-Tooltip {
-        text-align: left;
-        display: none;
-    }
-
-    &-Title {}
-    &-Description {}
-    &-Attributes {}
-    &-Attribute {}
-}
-
-.Choices,
-.Guesses {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-    > li {
-        display: inline-block;
-    }
-}
-
-.Stats {}
+@import "variables";
+@import "global";
+@import "item";
+@import "item-list";
+@import "stats";

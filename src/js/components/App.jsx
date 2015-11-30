@@ -8,15 +8,7 @@ function mapStateToProps(state) {
     return {
         loading: state.quiz.get("loading"),
         loaded: state.quiz.get("loaded"),
-        round: state.quiz.get("round"),
-    };
-
-    return {
-        ready: state.quiz.get("loaded"),
-        items: state.items,
-
-        buildable: state.buildable,
-        components: state.components
+        round: state.quiz.get("round")
     };
 }
 
@@ -27,9 +19,9 @@ class App extends React.Component {
     }
 
     render() {
+        //<h1>The Shopkeeper's Quiz</h1>
         return (
             <main>
-                <h1>The Shopkeeper's Quiz</h1>
 
                 {this.props.loading &&
                     <p>Loading...</p>

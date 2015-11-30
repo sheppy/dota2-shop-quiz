@@ -5,12 +5,19 @@ class Item extends React.Component {
     render() {
         let itemClass = classNames({
             Item: true,
-            selected: this.props.isSelected
+            selected: this.props.selected,
+            empty: !this.props.localized_name
         });
+
+        if (!_.size(this.props)) {
+            return <figure className={itemClass}>
+                <img className="Item-Image" src="http://cdn.dota2.com/apps/dota2/images/quiz/item-slot-unknown.png" alt=""/>
+
+            </figure>;
+        }
 
         return (
             <figure className={itemClass} onClick={this.props.onClick}>
-
                 {this.props.img &&
                     <img className="Item-Image" src={"img/" + this.props.img} alt={this.props.localized_name}/>
                 }

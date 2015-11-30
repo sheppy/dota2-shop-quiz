@@ -104,8 +104,8 @@ describe("Quiz", () => {
             const score = nextState.get("score");
 
             score.get("guessesLeft").should.equal(3);
-            score.get("score").should.equal(0);
-            score.get("row").should.equal(0);
+            score.get("points").should.equal(0);
+            score.get("streak").should.equal(0);
         });
     });
 });

@@ -2,15 +2,10 @@ import _ from "lodash";
 import React from "react";
 
 import Item from "../Item";
+import Score from "../Score";
 
 
 class ItemList extends React.Component {
-    constructor(props) {
-        super(props);
-
-        //console.log('props', props, this.props);
-    }
-
     render() {
         let extraItems = 0;
 

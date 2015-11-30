@@ -47,8 +47,8 @@ function getInitialRound(buildable) {
 function getInitialScore() {
     return Map({
         guessesLeft: 3,
-        score: 0,
-        row: 0
+        points: 0,
+        streak: 0
     });
 }
 

@@ -8,12 +8,16 @@ import ItemList from "../ItemList";
 class Quiz extends React.Component {
 
     selectItem(item) {
-        console.log("Select item", item.toJS());
+        if (!item || item.get("selected")) {
+            return;
+        }
         selectItem(item);
     }
 
     unselectItem(item) {
-        console.log("Un-select item", item.toJS());
+        if (!item) {
+            return;
+        }
         unselectItem(item);
     }
 
@@ -29,11 +33,6 @@ class Quiz extends React.Component {
 
                 <ItemList items={this.props.guesses} onClick={this.unselectItem.bind(this)} minItems={this.props.item.get("components").size} />
                 <ItemList items={this.props.choices} onClick={this.selectItem.bind(this)} />
-
-                <div>
-                    <h3>Stats</h3>
-                    <p>Remaining Items: {this.props.items.size}</p>
-                </div>
             </div>
         )
     }

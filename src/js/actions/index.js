@@ -4,6 +4,8 @@ import store from "../core/store.js";
 
 export const REQUEST_ITEMS = 'REQUEST_ITEMS';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
+export const SELECT_ITEM = 'SELECT_ITEM';
+export const UNSELECT_ITEM = 'UNSELECT_ITEM';
 
 export function requestItems() {
     return {
@@ -14,7 +16,7 @@ export function requestItems() {
 export function receiveItems(data) {
     return {
         type: RECEIVE_ITEMS,
-        data: data
+        data
     };
 }
 
@@ -24,4 +26,18 @@ export function fetchItems() {
         .then(function (response) {
             store.dispatch(receiveItems(response.data));
         });
+}
+
+export function selectItem(item) {
+    store.dispatch({
+        type: SELECT_ITEM,
+        item
+    });
+}
+
+export function unselectItem(item) {
+    store.dispatch({
+        type: UNSELECT_ITEM,
+        item
+    });
 }

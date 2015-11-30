@@ -4,7 +4,7 @@ import * as Quiz from "../core/quiz";
 import * as Round from "../core/round";
 
 
-import { REQUEST_ITEMS, RECEIVE_ITEMS } from "../actions";
+import { REQUEST_ITEMS, RECEIVE_ITEMS, SELECT_ITEM, UNSELECT_ITEM } from "../actions";
 
 // Quiz
 const INITIAL_QUIZ_STATE = Map({
@@ -20,6 +20,12 @@ export function quiz(state = INITIAL_QUIZ_STATE, action = {}) {
         case RECEIVE_ITEMS:
             //return Quiz.initialise(state, fromJS(action.data));
             return Round.start(Quiz.initialise(state, fromJS(action.data)));
+
+        case SELECT_ITEM:
+            return Round.addItem(state, action.item);
+
+        case UNSELECT_ITEM:
+            return Round.removeItem(state, action.item);
 
         default:
             return state;

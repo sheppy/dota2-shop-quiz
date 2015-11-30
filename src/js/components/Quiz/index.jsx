@@ -1,6 +1,6 @@
 import React from "react";
 
-import Round from "./Round.jsx";
+import Round from "../Round";
 
 
 class Quiz extends React.Component {

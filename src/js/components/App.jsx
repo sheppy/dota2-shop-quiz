@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import Quiz from "./Quiz.jsx";
+import Quiz from "./Quiz";
 import { fetchItems } from "../actions";
 
 

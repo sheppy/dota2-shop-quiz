@@ -9,8 +9,11 @@ class Item extends React.Component {
         });
 
         return (
-            <figure className={itemClass}>
-                <img className="Item-Image" src={"ixmg/" + this.props.img} alt={this.props.localized_name} />
+            <figure className={itemClass} onClick={this.props.onClick}>
+
+                {this.props.img &&
+                    <img className="Item-Image" src={"img/" + this.props.img} alt={this.props.localized_name}/>
+                }
 
                 <figcaption className="Item-Tooltip">
                     <h2 className="Item-Title">{this.props.localized_name}</h2>

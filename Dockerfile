@@ -2,8 +2,7 @@ FROM alpine
 MAINTAINER Chris Sheppard
 
 RUN apk add --update nodejs
-RUN apk add --update python
-RUN apk add --update make
+RUN apk add --update python make gcc
 
 ENV PORT 8080
 ENV NODE_ENV production

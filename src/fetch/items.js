@@ -19,9 +19,7 @@ class Items {
         // Check if there is a recipe needed as a component
         return _.each(items, function (item) {
             // Check it does not already have a recipe
-            var hasRecipe = !!_.find(item.components, function (i) {
-                return ~i.indexOf("recipe");
-            });
+            var hasRecipe = !!_.find(item.components, (i) => ~i.indexOf("recipe"));
 
             // See if there is a recipe if it does not already have one
             if (!hasRecipe) {
@@ -34,9 +32,7 @@ class Items {
             }
 
             // Remove odd unused recipes
-            _.remove(item.components, function (name) {
-                return ~FAKE_RECIPES.indexOf(name);
-            });
+            _.remove(item.components, (name) => ~FAKE_RECIPES.indexOf(name));
         });
     }
 

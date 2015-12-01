@@ -13,4 +13,5 @@ WORKDIR /var/www/quiz
 
 EXPOSE 8080
 RUN npm install
+RUN npm install -g gulp
 CMD npm run build; npm start

@@ -2,7 +2,7 @@ FROM alpine
 MAINTAINER Chris Sheppard
 
 RUN apk add --update nodejs
-RUN apk add --update python make gcc
+RUN apk add --update python build-base
 
 ENV PORT 8080
 ENV NODE_ENV production
@@ -14,5 +14,4 @@ WORKDIR /var/www/quiz
 
 EXPOSE 8080
 RUN npm install
-RUN npm install -g gulp
 CMD npm run build; npm start

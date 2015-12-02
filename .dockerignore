@@ -1,0 +1,14 @@
+# Root files
+.git/
+.editorconfig
+.gitignore
+LICENSE
+README.md
+wallaby.js
+
+# Tests are not run
+test/
+
+# Tasks not used
+task/test.js
+task/server.js

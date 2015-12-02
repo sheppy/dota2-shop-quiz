@@ -30,7 +30,8 @@
     "gulp-mocha": "^2.2.0",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
-    "wallabify": "0.0.11"
+    "wallabify": "0.0.11",
+    "browser-sync": "^2.10.0"
   },
   "dependencies": {
     "axios": "^0.7.0",
@@ -38,7 +39,6 @@
     "babel-preset-react": "^6.1.18",
     "babelify": "^7.2.0",
     "bluebird": "^2.10.2",
-    "browser-sync": "^2.10.0",
     "browserify": "^12.0.1",
     "bundle-collapser": "^1.2.1",
     "classnames": "^2.2.1",

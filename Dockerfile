@@ -9,10 +9,11 @@ ENV NODE_ENV production
 
 RUN mkdir -p /var/www/quiz
 
-ADD . /var/www/quiz
-WORKDIR /var/www/quiz
+ADD package.json /var/www/quiz/package.json
+RUN cd /var/www/quiz && npm install
 
-RUN npm install
+WORKDIR /var/www/quiz
+ADD . /var/www/quiz
 RUN npm run fetch
 RUN npm run build
 

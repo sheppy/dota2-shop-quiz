@@ -28,16 +28,16 @@ export function fetchItems() {
         });
 }
 
-export function selectItem(item) {
+export function selectItem(index) {
     store.dispatch({
         type: SELECT_ITEM,
-        item
+        index
     });
 }
 
-export function unselectItem(item) {
+export function unselectItem(index) {
     store.dispatch({
         type: UNSELECT_ITEM,
-        item
+        index
     });
 }

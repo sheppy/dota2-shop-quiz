@@ -96,12 +96,12 @@ describe("Round", () => {
             const round = Map({ item, guesses: List(), choices: List.of(item2, item3) });
             const state = Map({ round });
 
-            const nextState = Round.addItem(state, item2);
+            const nextState = Round.addItem(state, 0);
             const nextRound = nextState.get("round");
             const guesses = nextRound.get("guesses");
 
             guesses.should.have.size(1);
-            guesses.should.include(item2);
+            guesses.should.include(item2.set("selected", 0));
         });
 
         it("adds another item to the guesses", () => {
@@ -109,21 +109,21 @@ describe("Round", () => {
             const round = Map({ item, guesses: List.of(item2), choices: List.of(item2, item3, item4) });
             const state = Map({ round });
 
-            const nextState = Round.addItem(state, item3);
+            const nextState = Round.addItem(state, 1);
             const nextRound = nextState.get("round");
             const guesses = nextRound.get("guesses");
 
             guesses.should.have.size(2);
-            guesses.should.include(item3);
+            guesses.should.include(item3.set("selected", 1));
         });
 
         it("indicates if not all the guesses are correct", () => {
             const item = item1.merge({ components: List.of("item_2", "item_3", "item_4") });
             const score = Map({ guessesLeft: 3, streak: 0, points: 0 });
-            const round = Map({ item, guesses: List.of(item2, item3), choices: List.of(item2, item3, item4) });
+            const round = Map({ item, guesses: List.of(item2, item3), choices: List.of(item2, item3, item4, item5, item6) });
             const state = Map({ round, score });
 
-            const nextState = Round.addItem(state, item6);
+            const nextState = Round.addItem(state, 4);
             const nextRound = nextState.get("round");
             const guesses = nextRound.get("guesses");
 
@@ -134,17 +134,21 @@ describe("Round", () => {
             const item = item1.merge({ components: List.of("item_2", "item_3", "item_4") });
             const items = List.of(item5, item6, item7);
             const roundItems = List.of(item2, item3, item4);
-            const round = Map({ number: 1, items: roundItems, item, guesses: List(), choices: List.of(item2, item3, item4) });
+            const round = Map({ number: 1, items: roundItems, item, guesses: List(), choices: List.of(item2, item2, item3, item4) });
             const state = Map({ round, items, components });
 
-            const nextState = Round.addItem(state, item2);
+            const nextState = Round.addItem(state, 1);
             const nextRound = nextState.get("round");
             const guesses = nextRound.get("guesses");
             const choices = nextRound.get("choices");
 
             guesses.should.have.size(1);
-            choices.filter(choice => choice.get("selected")).should.have.size(1);
-            choices.find(choice => choice.get("selected")).get("name").should.equal(item2.get("name"));
+            choices.filter(choice => choice.has("selected")).should.have.size(1);
+            choices.find(choice => choice.has("selected")).get("name").should.equal(item2.get("name"));
+
+            choices.hasIn([0, "selected"]).should.be.false;
+            choices.hasIn([1, "selected"]).should.be.true;
+            choices.getIn([1, "selected"]).should.equal(1);
         });
 
         it("starts a new round if the guesses were correct", () => {
@@ -155,7 +159,7 @@ describe("Round", () => {
             const round = Map({ number: 1, items: roundItems, item, guesses: List.of(item2, item3), choices: List.of(item2, item3, item4) });
             const state = Map({ score, round, items, components });
 
-            const nextState = Round.addItem(state, item4);
+            const nextState = Round.addItem(state, 2);
             const nextRound = nextState.get("round");
             const guesses = nextRound.get("guesses");
 
@@ -168,10 +172,10 @@ describe("Round", () => {
             const items = List.of(item5, item6, item7);
             const roundItems = List.of(item2, item3, item4);
             const score = Map({ guessesLeft: 3, streak: 0, points: 0 });
-            const round = Map({ number: 1, items: roundItems, item, guesses: List.of(item2, item3), choices: List.of(item2, item3, item4) });
+            const round = Map({ number: 1, items: roundItems, item, guesses: List.of(item2, item3), choices: List.of(item2, item3, item4, item5) });
             const state = Map({ score, round, items, components });
 
-            const nextState = Round.addItem(state, item5);
+            const nextState = Round.addItem(state, 3);
             const nextRound = nextState.get("round");
             const guesses = nextRound.get("guesses");
 
@@ -186,7 +190,7 @@ describe("Round", () => {
             const round = Map({ number: 1, items: roundItems, item, guesses: List.of(item2, item3, item5), choices: List.of(item2, item3, item4, item6) });
             const state = Map({ round, items, components });
 
-            const nextState = Round.addItem(state, item6);
+            const nextState = Round.addItem(state, 3);
             const nextRound = nextState.get("round");
             const guesses = nextRound.get("guesses");
 
@@ -194,14 +198,16 @@ describe("Round", () => {
             guesses.should.not.include(item6);
             guesses.should.equal(List.of(item2, item3, item5));
         });
+
+        // TODO: Can't add an item thats already added
     });
 
     describe("removeItem", () => {
         it("removes the item from the guesses", () => {
-            const round = Map({ guesses: List.of(item2, item3, item4) });
+            const round = Map({ guesses: List.of(item2, item3.set("selected", 2), item4), choices: List.of(item2, item3, item3.set("selected", 2), item4, item6) });
             const state = Map({ round });
 
-            const nextState = Round.removeItem(state, item3);
+            const nextState = Round.removeItem(state, 1);
             const nextRound = nextState.get("round");
             const guesses = nextRound.get("guesses");
 
@@ -209,11 +215,20 @@ describe("Round", () => {
             guesses.should.not.include(item3);
         });
 
-
         it("removes the selected state from the item", () => {
-            // TODO: Remove selected from the one chosen
-            // TODO: Only choose the item clicked?
-            // TODO: Update to use indexes?
-        })
+            const round = Map({
+                guesses: List.of(item2, item3.set("selected", 2), item4),
+                choices: List.of(item2, item3, item3.set("selected", 2), item4, item6)
+            });
+            const state = Map({ round });
+
+            const nextState = Round.removeItem(state, 1);
+            const nextRound = nextState.get("round");
+            const guesses = nextRound.get("guesses");
+            const choices = nextRound.get("choices");
+
+            guesses.get(1).has("selected").should.be.false;
+            choices.get(2).has("selected").should.be.false;
+        });
     });
 });

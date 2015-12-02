@@ -21,10 +21,10 @@ export function quiz(state = INITIAL_QUIZ_STATE, action = {}) {
             return Round.start(Quiz.initialise(state, fromJS(action.data)));
 
         case SELECT_ITEM:
-            return Round.addItem(state, action.item);
+            return Round.addItem(state, action.index);
 
         case UNSELECT_ITEM:
-            return Round.removeItem(state, action.item);
+            return Round.removeItem(state, action.index);
 
         default:
             return state;

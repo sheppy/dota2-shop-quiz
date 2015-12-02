@@ -108,19 +108,21 @@ export function start(state) {
  * Add an item to the guesses
  *
  * @param {Map} state
- * @param {Map} item
+ * @param {number} index
  * @returns {Map}
  */
-export function addItem(state, item) {
+export function addItem(state, index) {
     const components = state.getIn(["round", "item", "components"]);
 
     if (state.getIn(["round", "guesses"]).size === components.size) {
         return state;
     }
 
+    const choice = state.getIn(["round", "choices", index]).set("selected", index);
+
     const nextState = state
-        .updateIn(["round", "guesses"], guesses => guesses.push(item))
-        .updateIn(["round", "choices"], choices => choices.update(choices.indexOf(item), (choice) => choice.set("selected", true)));
+        .updateIn(["round", "guesses"], guesses => guesses.push(choice))
+        .setIn(["round", "choices", index], choice);
 
     const guesses = nextState.getIn(["round", "guesses"]);
 
@@ -133,10 +135,17 @@ export function addItem(state, item) {
  * Remove an item from the guesses
  *
  * @param {Map} state
- * @param {Map} item
+ * @param {number} index
  * @returns {Map}
  */
-export function removeItem(state, item) {
-    return state.updateIn(["round", "guesses"], (guesses) => guesses.delete(guesses.indexOf(item)));
+export function removeItem(state, index) {
+    const item = state.getIn(["round", "guesses", index]);
+    const originalIndex = item.get("selected");
+
+    const choice = state.getIn(["round", "choices", originalIndex]);
+
+    return state
+        .updateIn(["round", "guesses"], guesses => guesses.delete(guesses.indexOf(item)))
+        .updateIn(["round", "choices"], choices => choices.set(originalIndex, choice.delete("selected")));
 }
 

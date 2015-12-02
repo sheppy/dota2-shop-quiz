@@ -5,14 +5,16 @@ class Item extends React.Component {
     render() {
         let itemClass = classNames({
             Item: true,
-            selected: this.props.selected,
+            selected: this.props.selectable && (typeof this.props.selected !== "undefined"),
             empty: !this.props.dname
         });
 
         if (!_.size(this.props)) {
-            return <figure className={itemClass}>
-                <img className="Item-Image" src="http://cdn.dota2.com/apps/dota2/images/quiz/item-slot-unknown.png" alt=""/>
-            </figure>;
+            return (
+                <figure className={itemClass}>
+                    <img className="Item-Image" src="http://cdn.dota2.com/apps/dota2/images/quiz/item-slot-unknown.png" alt=""/>
+                </figure>
+            );
         }
 
         return (

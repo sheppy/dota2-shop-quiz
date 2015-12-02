@@ -5,48 +5,72 @@ import request from "request";
 import API from "./api";
 
 const writeFile = Promise.promisify(fs.writeFile);
-const FAKE_RECIPES = [
-    //"recipe_ward_dispenser",
-    //"recipe_arcane_boots"
+
+const INVALID_ITEMS = [
+    "diffusal_blade_2", "aegis", "cheese", "courier", "flying_courier", "tpscroll",
+    "ward_dispenser", "ward_observer", "ward_sentry",
+    "bottle", "necronomicon_2", "necronomicon_3", "dagon_2", "dagon_3", "dagon_4", "dagon_5",
+    "halloween_candy_corn", "present", "mystery_arrow", "mystery_hook", "mystery_missile",
+    "mystery_toss", "mystery_vacuum", "winter_cake", "winter_coco", "winter_cookie",
+    "winter_greevil_chewy", "winter_greevil_garbage", "winter_greevil_treat", "winter_ham",
+    "winter_kringle", "winter_mushroom", "winter_skates", "winter_stocking", "winter_band",
+    "greevil_whistle", "greevil_whistle_toggle", "halloween_rapier"
 ];
 
+
 class Items {
-    get(API_KEY) {
-        return API.getItems(API_KEY);
+    get() {
+        return API.getItems();
     }
 
-    fixRecipes(items) {
-        // Check if there is a recipe needed as a component
+    addNames(items) {
+        return _.each(items, (item) => {
+            item.name = item.img.replace("_lg.png", "");
+        });
+    }
+
+    removeInvalid(items) {
+        return _.chain(items)
+            // Remove invalid items from the list
+            .reject((item) => ~INVALID_ITEMS.indexOf(item.name))
+            // Remove components that do not exist as items
+            .each((item) => {
+                _.remove(item.components, component => !_.find(items, (i) => i.name === component));
+            })
+            .value();
+    }
+
+    addRecipes(items) {
         return _.each(items, function (item) {
-            // Check it does not already have a recipe
-            var hasRecipe = !!_.find(item.components, (i) => ~i.indexOf("recipe"));
-
-            // See if there is a recipe if it does not already have one
-            if (!hasRecipe) {
-                var nameToFind = item.name.replace(/^item_/, "item_recipe_");
-
-                var recipe = _.findWhere(items, { name: nameToFind });
-                if (recipe && recipe.name && recipe.cost) {
-                    item.components.push(recipe.name.replace(/^item_/, ""));
-                }
+            if (!item.components) {
+                return;
             }
 
-            // Remove odd unused recipes
-            _.remove(item.components, (name) => ~FAKE_RECIPES.indexOf(name));
+            // Reduce the cost by the individual component costs
+            let cost = _.reduce(item.components, function (total, component) {
+                let comp = _.find(items, (i) => i.name === component);
+                if (!comp) {
+                    return total;
+                }
+                return total - comp.cost;
+            }, item.cost);
+
+            // If there is a price remaining it must be for a recipe
+            if (cost) {
+                item.components.push("recipe");
+            }
         });
     }
 
     trimItemData(items) {
         return _.each(items, function (item) {
             delete item.id;
-            delete item.secret_shop;
-            delete item.side_shop;
-            delete item.dname;
             delete item.qual;
             delete item.notes;
             delete item.mc;
             delete item.cd;
             delete item.cost;
+            delete item.created;
         });
     }
 
@@ -70,7 +94,7 @@ class Items {
     }
 
     static _saveImage(item, imageData) {
-        console.log(" Saving image: " + item.localized_name + " > " + item.img);
+        console.log(" Saving image: " + item.dname + " > " + item.img);
         return writeFile("dist/img/" + item.img, imageData, "binary");
     }
 }

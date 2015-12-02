@@ -6,24 +6,23 @@ class Item extends React.Component {
         let itemClass = classNames({
             Item: true,
             selected: this.props.selected,
-            empty: !this.props.localized_name
+            empty: !this.props.dname
         });
 
         if (!_.size(this.props)) {
             return <figure className={itemClass}>
                 <img className="Item-Image" src="http://cdn.dota2.com/apps/dota2/images/quiz/item-slot-unknown.png" alt=""/>
-
             </figure>;
         }
 
         return (
             <figure className={itemClass} onClick={this.props.onClick}>
                 {this.props.img &&
-                    <img className="Item-Image" src={"img/" + this.props.img} alt={this.props.localized_name}/>
+                    <img className="Item-Image" src={"http://cdn.dota2.com/apps/dota2/images/items/" + this.props.img} alt={this.props.dname}/>
                 }
 
                 <figcaption className="Item-Tooltip">
-                    <h2 className="Item-Title">{this.props.localized_name}</h2>
+                    <h2 className="Item-Title">{this.props.dname}</h2>
 
                     {this.props.lore &&
                         <p className="Item-Lore">{this.props.lore}</p>

@@ -16,29 +16,25 @@ import * as Quiz from "../src/js/core/quiz";
 describe("Quiz", () => {
     describe("initialise", () => {
         const item1 = Map({
-            name: "Item 1",
-            created: true,
-            components: List.of("Item 2", "Item 3")
+            name: "item_1",
+            components: List.of("item_2", "item_3")
         });
         const item2 = Map({
-            name: "Item 2",
-            created: false
+            name: "item_2"
         });
         const item3 = Map({
-            name: "Item 3",
-            created: true,
-            components: List.of("recipe_test")
+            name: "item_3",
+            components: List.of("recipe")
         });
         const item4 = Map({
-            name: "Item 4",
-            created: true,
-            components: List.of("Item 2", "recipe_test", "Item 3")
+            name: "item_4",
+            components: List.of("item_2", "recipe", "item_3")
         });
-        const item5 = Map({ name: "Item 5", created: true });
-        const item6 = Map({ name: "Item 6", created: true });
-        const item7 = Map({ name: "Item 7", created: true });
-        const item8 = Map({ name: "Item 8", created: true });
-        const item9 = Map({ name: "Item 9", created: true });
+        const item5 = Map({ name: "item_5", created: true, components: List() });
+        const item6 = Map({ name: "item_6", created: true, components: List() });
+        const item7 = Map({ name: "item_7", created: true, components: List() });
+        const item8 = Map({ name: "item_8", created: true, components: List() });
+        const item9 = Map({ name: "item_9", created: true, components: List() });
 
 
         it("sets the buildable items", () => {
@@ -48,29 +44,18 @@ describe("Quiz", () => {
             nextState.get("buildable").should.equal(List.of(item1));
         });
 
-        it("fixes buildable items recipes to be called recipe", () => {
-            const state = Map();
-            const nextState = Quiz.initialise(state, List.of(item2, item3));
-
-            nextState.get("buildable").should.equal(List.of(Map({
-                name: "Item 3",
-                created: true,
-                components: List.of("recipe")
-            })));
-        });
-
         it("sets the available component items", () => {
             const state = Map();
             const nextState = Quiz.initialise(state, List.of(item1, item2));
 
-            nextState.get("components").should.equal(List.of("Item 2", "Item 3"));
+            nextState.get("components").should.equal(List.of("item_2", "item_3"));
         });
 
         it("removes recipes from available components", () => {
             const state = Map();
             const nextState = Quiz.initialise(state, List.of(item4));
 
-            nextState.get("components").should.equal(List.of("Item 2", "Item 3"));
+            nextState.get("components").should.equal(List.of("item_2", "item_3"));
         });
 
         it("initialises the round item", () => {

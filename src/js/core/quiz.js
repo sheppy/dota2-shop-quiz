@@ -1,22 +1,10 @@
 import _ from "lodash";
 import {List, Map} from "immutable";
 
-const REGEX_RECIPE_NAME = /^recipe(_.+)$/;
-
 
 function getBuildableItems(items) {
-    // Get only the items that are created
-    return items.toSeq()
-        .filter(item => item.get("created"))
-        .map(function (item) {
-            // Change all component recipes to be called recipe
-            if (item.has("components")) {
-                return item.set("components", item.get("components").map(componentName => componentName.replace(REGEX_RECIPE_NAME, "recipe")));
-            }
-
-            return item;
-        })
-        .toList();
+    // Get only the items that have components
+    return items.filter(item => item.get("components"));
 }
 
 function getComponentItems(items) {
@@ -28,7 +16,8 @@ function getComponentItems(items) {
             }
             return components;
         }, List())
-        .filter(component => !component.match(REGEX_RECIPE_NAME));  // Remove recipes
+        // TODO: Remove duplicates
+        .filter(component => component !== "recipe");  // Remove recipes
 }
 
 function shuffleItems(items) {

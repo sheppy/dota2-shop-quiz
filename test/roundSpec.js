@@ -14,17 +14,17 @@ import * as Round from "../src/js/core/round";
 
 
 describe("Round", () => {
-    const components = List.of("Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9");
+    const components = List.of("item_1", "item_2", "item_3", "item_4", "item_5", "item_6", "item_7", "item_8", "item_9");
 
-    const item1 = Map({ name: "item_Item 1" });
-    const item2 = Map({ name: "item_Item 2" });
-    const item3 = Map({ name: "item_Item 3" });
-    const item4 = Map({ name: "item_Item 4" });
-    const item5 = Map({ name: "item_Item 5" });
-    const item6 = Map({ name: "item_Item 6" });
-    const item7 = Map({ name: "item_Item 7" });
-    const item8 = Map({ name: "item_Item 8" });
-    const item9 = Map({ name: "item_Item 9" });
+    const item1 = Map({ name: "item_1" });
+    const item2 = Map({ name: "item_2" });
+    const item3 = Map({ name: "item_3" });
+    const item4 = Map({ name: "item_4" });
+    const item5 = Map({ name: "item_5" });
+    const item6 = Map({ name: "item_6" });
+    const item7 = Map({ name: "item_7" });
+    const item8 = Map({ name: "item_8" });
+    const item9 = Map({ name: "item_9" });
 
     const items = List.of(item1, item2, item3, item4, item5, item6, item7, item8, item9);
 
@@ -50,7 +50,7 @@ describe("Round", () => {
         });
 
         it("replaces the last item to guess", () => {
-            const round = Map({ number: 1, item: "Item 1", items: List.of(item2, item3, item4) });
+            const round = Map({ number: 1, item: "item_1", items: List.of(item2, item3, item4) });
             const state = Map({ items, components, round });
             const nextState = Round.start(state);
             const nextRound = nextState.get("round");
@@ -76,7 +76,7 @@ describe("Round", () => {
         it("generates some item choices including the real ones", () => {
             const round = Map({
                 number: 0,
-                items: List.of(item1.merge({ components: List.of("Item 2", "Item 3") }), item2, item3)
+                items: List.of(item1.merge({ components: List.of("item_2", "item_3") }), item2, item3)
             });
 
             const state = Map({ items, components, round });
@@ -92,7 +92,7 @@ describe("Round", () => {
 
     describe("addItem", () => {
         it("adds an item to the guesses", () => {
-            const item = item1.merge({ components: List.of("Item 2", "Item 3") });
+            const item = item1.merge({ components: List.of("item_2", "item_3") });
             const round = Map({ item, guesses: List(), choices: List.of(item2, item3) });
             const state = Map({ round });
 
@@ -105,7 +105,7 @@ describe("Round", () => {
         });
 
         it("adds another item to the guesses", () => {
-            const item = item1.merge({ components: List.of("Item 2", "Item 3", "Item 4") });
+            const item = item1.merge({ components: List.of("item_2", "item_3", "item_4") });
             const round = Map({ item, guesses: List.of(item2), choices: List.of(item2, item3, item4) });
             const state = Map({ round });
 
@@ -118,7 +118,7 @@ describe("Round", () => {
         });
 
         it("indicates if not all the guesses are correct", () => {
-            const item = item1.merge({ components: List.of("Item 2", "Item 3", "Item 4") });
+            const item = item1.merge({ components: List.of("item_2", "item_3", "item_4") });
             const score = Map({ guessesLeft: 3, streak: 0, points: 0 });
             const round = Map({ item, guesses: List.of(item2, item3), choices: List.of(item2, item3, item4) });
             const state = Map({ round, score });
@@ -131,7 +131,7 @@ describe("Round", () => {
         });
 
         it("updates the selected status of the item added", () => {
-            const item = item1.merge({ components: List.of("Item 2", "Item 3", "Item 4") });
+            const item = item1.merge({ components: List.of("item_2", "item_3", "item_4") });
             const items = List.of(item5, item6, item7);
             const roundItems = List.of(item2, item3, item4);
             const round = Map({ number: 1, items: roundItems, item, guesses: List(), choices: List.of(item2, item3, item4) });
@@ -148,7 +148,7 @@ describe("Round", () => {
         });
 
         it("starts a new round if the guesses were correct", () => {
-            const item = item1.merge({ components: List.of("Item 2", "Item 3", "Item 4") });
+            const item = item1.merge({ components: List.of("item_2", "item_3", "item_4") });
             const items = List.of(item5, item6, item7);
             const roundItems = List.of(item2, item3, item4);
             const score = Map({ guessesLeft: 3, streak: 0, points: 0 });
@@ -164,7 +164,7 @@ describe("Round", () => {
         });
 
         it("does not start the next round if the items are not all correct", () => {
-            const item = item1.merge({ components: List.of("Item 2", "Item 3", "Item 4") });
+            const item = item1.merge({ components: List.of("item_2", "item_3", "item_4") });
             const items = List.of(item5, item6, item7);
             const roundItems = List.of(item2, item3, item4);
             const score = Map({ guessesLeft: 3, streak: 0, points: 0 });
@@ -180,7 +180,7 @@ describe("Round", () => {
         });
 
         it("does not add more items than allowed", () => {
-            const item = item1.merge({ components: List.of("Item 2", "Item 3", "Item 4") });
+            const item = item1.merge({ components: List.of("item_2", "item_3", "item_4") });
             const items = List.of(item5, item6, item7);
             const roundItems = List.of(item2, item3, item4);
             const round = Map({ number: 1, items: roundItems, item, guesses: List.of(item2, item3, item5), choices: List.of(item2, item3, item4, item6) });

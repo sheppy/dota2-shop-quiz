@@ -11,8 +11,8 @@ export const NUMBER_OF_COMPONENTS = 8;
  */
 export const recipeItem = Map({
     img: "recipe_lg.png",
-    localized_name: "Recipe",
-    name: "item_recipe",
+    dname: "Recipe",
+    name: "recipe",
     desc: "A recipe to build the desired item.",
     cost: 0,
     lore: "A recipe is always necessary to craft the most mighty of objects.",
@@ -42,7 +42,7 @@ function getComponentChoices(item, items, components) {
     return List(_.shuffle(choices.toArray()))
         .reduce(function (components, itemName) {
             // Get actual items for componentChoices
-            var item = items.find(i => i.get("name") === "item_" + itemName);
+            var item = items.find(i => i.get("name") === itemName);
 
             if (item) {
                 return components.push(item);
@@ -69,7 +69,7 @@ function checkItems(state, guesses, components) {
     }
 
     // Check if correct result
-    let allGuessesCorrect = components.every(component => guesses.find((guess) => guess.get("name") === "item_" + component));
+    let allGuessesCorrect = components.every(component => guesses.find((guess) => guess.get("name") === component));
 
     if (allGuessesCorrect) {
         // Start new round

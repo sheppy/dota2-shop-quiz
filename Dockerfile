@@ -12,6 +12,9 @@ RUN mkdir -p /var/www/quiz
 ADD . /var/www/quiz
 WORKDIR /var/www/quiz
 
-EXPOSE 8080
 RUN npm install
-CMD npm run build; npm start
+RUN npm run fetch
+RUN npm run build
+
+EXPOSE 8080
+CMD npm start

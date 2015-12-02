@@ -199,7 +199,7 @@ describe("Round", () => {
             guesses.should.equal(List.of(item2, item3, item5));
         });
 
-        it("can't add an item that's already added", () => {
+        it("removes an item that's already added", () => {
             const item = item1.merge({ components: List.of("item_2", "item_3", "item_4") });
             const round = Map({
                 item,
@@ -212,8 +212,8 @@ describe("Round", () => {
             const nextRound = nextState.get("round");
             const guesses = nextRound.get("guesses");
 
-            guesses.should.have.size(1);
-            guesses.should.include(item2.set("selected", 0));
+            guesses.should.have.size(0);
+            guesses.should.not.include(item2.set("selected", 0));
         });
     });
 

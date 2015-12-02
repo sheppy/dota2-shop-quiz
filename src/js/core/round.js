@@ -117,8 +117,8 @@ export function addItem(state, index) {
 
     // Can't select a choice that is already selected
     if (state.hasIn(["round", "choices", index, "selected"])) {
-        // TODO: This should remove
-        return state;
+        // This should remove from guesses
+        return removeItem(state, state.getIn(["round", "guesses"]).indexOf(choice))
     }
 
     // Can't add more items

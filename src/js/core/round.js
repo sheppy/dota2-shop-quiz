@@ -113,12 +113,18 @@ export function start(state) {
  */
 export function addItem(state, index) {
     const components = state.getIn(["round", "item", "components"]);
+    const choice = state.getIn(["round", "choices", index]).set("selected", index);
 
-    if (state.getIn(["round", "guesses"]).size === components.size) {
+    // Can't select a choice that is already selected
+    if (state.hasIn(["round", "choices", index, "selected"])) {
+        // TODO: This should remove
         return state;
     }
 
-    const choice = state.getIn(["round", "choices", index]).set("selected", index);
+    // Can't add more items
+    if (state.getIn(["round", "guesses"]).size === components.size) {
+        return state;
+    }
 
     const nextState = state
         .updateIn(["round", "guesses"], guesses => guesses.push(choice))

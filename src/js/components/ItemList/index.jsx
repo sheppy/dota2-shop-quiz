@@ -17,7 +17,7 @@ class ItemList extends React.Component {
             <ul className="ItemList">
                 {this.props.items.map((item, index) =>
                     <li key={index}>
-                        <Item {...item.toObject()} onClick={this.props.onClick.bind(this, index)}/>
+                        <Item selectable={this.props.selectable} {...item.toObject()} onClick={this.props.onClick.bind(this, index)}/>
                     </li>
                 )}
 

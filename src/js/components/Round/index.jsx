@@ -6,15 +6,6 @@ import ItemList from "../ItemList";
 
 
 class Quiz extends React.Component {
-
-    selectItem(index) {
-        selectItem(index);
-    }
-
-    unselectItem(index) {
-        unselectItem(index);
-    }
-
     render() {
         return (
             <div>
@@ -25,8 +16,8 @@ class Quiz extends React.Component {
                     <Item {...this.props.item.toObject()}/>
                 </div>
 
-                <ItemList selectable={false} items={this.props.guesses} onClick={this.unselectItem.bind(this)} minItems={this.props.item.get("components").size} />
-                <ItemList items={this.props.choices} onClick={this.selectItem.bind(this)} />
+                <ItemList items={this.props.guesses} onClick={unselectItem.bind(this)} minItems={this.props.item.get("components").size} />
+                <ItemList selectable={true} items={this.props.choices} onClick={selectItem.bind(this)} />
             </div>
         )
     }

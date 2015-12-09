@@ -5,6 +5,7 @@ MAINTAINER Chris Sheppard
 # Setup
 ENV PORT=8080 NODE_ENV=production
 EXPOSE 8080
+
 #RUN apk update && \
 #    apk upgrade && \
 #    apk add nodejs && \

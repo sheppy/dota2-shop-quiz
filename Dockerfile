@@ -15,7 +15,7 @@ RUN apk update && \
 # Install
 ADD package.json /app/
 RUN cd /app && \
-    npm install
+    npm --cache-min=604800 install
 
 WORKDIR /app
 ADD . /app

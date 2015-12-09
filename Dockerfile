@@ -28,5 +28,6 @@ RUN npm run fetch && \
     npm run build
 
 # Run
-CMD ["start"]
-ENTRYPOINT "npm"
+#CMD ["start"]
+#ENTRYPOINT "npm"
+CMD npm start

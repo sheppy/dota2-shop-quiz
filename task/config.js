@@ -4,6 +4,7 @@ const config = {
         swig: "**/*.swig",
         css: "**/*.css",
         scss: "**/*.scss",
+        scssPartial: "**/_*.scss",
         js: "**/*.js",
         jsx: "**/*.jsx"
     },

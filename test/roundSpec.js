@@ -88,6 +88,25 @@ describe("Round", () => {
             choices.should.contain(item2);
             choices.should.contain(item3);
         });
+
+        it("generates some item choices not including the item to guess", () => {
+            const item = item1.merge({ components: List.of("item_2", "item_3") });
+            const round = Map({
+                number: 0,
+                items: List.of(item, item2, item3)
+            });
+
+            const state = Map({
+                items: List.of(item, item2, item3),
+                components: List.of("item_1", "item_2", "item_3"),
+                round
+            });
+            const nextState = Round.start(state);
+            const choices = nextState.get("round").get("choices");
+
+            choices.should.be.truthy;
+            choices.should.not.contain(item);
+        });
     });
 
     describe("addItem", () => {

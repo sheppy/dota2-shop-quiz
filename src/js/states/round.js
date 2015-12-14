@@ -20,8 +20,16 @@ export const recipeItem = Map({
 });
 
 
-function getRandomComponent(components) {
-    return components.get(_.random(components.size - 1));
+function getRandomComponent(components, item) {
+    const itemName = item.get("name");
+    let component = itemName;
+
+    // Ensure the item we are making is not one of the components
+    while (component === itemName) {
+        component = _.random(components.size - 1)
+    }
+
+    return components.get(component);
 }
 
 
@@ -37,7 +45,7 @@ function getComponentChoices(item, items, components) {
         .filter(component => component !== "recipe")
         .toList()
         .setSize(NUMBER_OF_COMPONENTS - 1)
-        .map(choice => choice ? choice : getRandomComponent(components));
+        .map(choice => choice ? choice : getRandomComponent(components, item));
 
     return List(_.shuffle(choices.toArray()))
         .reduce(function (components, itemName) {

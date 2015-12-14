@@ -10,7 +10,7 @@ chai.use(sinonChai);
 
 
 import {List, Map} from "immutable";
-import * as Quiz from "../src/js/core/quiz";
+import * as Quiz from "../src/js/states/quiz";
 
 
 describe("Quiz", () => {

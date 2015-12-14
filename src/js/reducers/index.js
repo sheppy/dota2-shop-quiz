@@ -1,7 +1,7 @@
 import { fromJS, Map } from "immutable";
 
-import * as Quiz from "../core/quiz";
-import * as Round from "../core/round";
+import * as Quiz from "../states/quiz";
+import * as Round from "../states/round";
 
 
 import { REQUEST_ITEMS, RECEIVE_ITEMS, SELECT_ITEM, UNSELECT_ITEM } from "../actions";

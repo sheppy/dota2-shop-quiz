@@ -10,7 +10,7 @@ chai.use(sinonChai);
 
 
 import {List, Map} from "immutable";
-import * as Round from "../src/js/core/round";
+import * as Round from "../src/js/states/round";
 
 
 describe("Round", () => {

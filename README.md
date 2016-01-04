@@ -2,6 +2,10 @@
 
 A JavaScript Dota 2 Shop Quiz!
 
+## Demo
+http://dota2-shop-quiz.godiambored.co.uk/
+
+
 ## Setup
 
 Install *npm* modules:

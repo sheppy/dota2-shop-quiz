@@ -1,5 +1,6 @@
 import _ from "lodash";
 import {List, Map} from "immutable";
+import * as track from "../core/tracking";
 
 import * as Score from "./score";
 
@@ -77,12 +78,25 @@ function checkItems(state, guesses, components) {
     }
 
     // Check if correct result
+    let itemName = state.getIn(["round", "item", "name"]);
     let allGuessesCorrect = components.every(component => guesses.find((guess) => guess.get("name") === component));
 
     if (allGuessesCorrect) {
+        track.event({
+            eventCategory: "Guess",
+            eventAction: "correct",
+            eventValue: itemName
+        });
+
         // Start new round
         return start(Score.correct(state));
     }
+
+    track.event({
+        eventCategory: "Guess",
+        eventAction: "wrong",
+        eventValue: itemName
+    });
 
     return Score.incorrect(state);
 }
@@ -101,10 +115,17 @@ export function start(state) {
     let roundItems = round.get("items");
 
     let item = roundItems.first();
+    let roundNumber = round.get("number", 0) + 1;
+
+    track.event({
+        eventCategory: "Round",
+        eventAction: "start",
+        eventValue: roundNumber
+    });
 
     // TODO: Detect when run out of items
     return state.mergeIn(["round"], {
-        number: round.get("number", 0) + 1,
+        number: roundNumber,
         item: item,
         items: roundItems.skip(1),
         choices: getComponentChoices(item, items, components),

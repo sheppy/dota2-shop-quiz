@@ -23,7 +23,11 @@ gulp.task("js", function () {
         browserify(file.path, {
             plugin: [bundleCollapser],
             extensions: [".js", ".jsx"],
-            bundleExternal: false
+            bundleExternal: false,
+
+            insertGlobalVars: {
+                IS_PROD: () => process.env.NODE_ENV === "production"
+            }
         })
         .transform(babelify, { presets: ["es2015", "react"] })
         .transform(exposify, {

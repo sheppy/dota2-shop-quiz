@@ -1,6 +1,8 @@
 import ReactDOM from "react-dom";
+import * as track from "./core/tracking";
 
 import Provider from "./core/provider.jsx";
 
-ReactDOM.render(Provider, document.getElementById("app"));
+track.init();
 
+ReactDOM.render(Provider, document.getElementById("app"));

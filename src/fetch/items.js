@@ -17,6 +17,13 @@ const INVALID_ITEMS = [
     "greevil_whistle", "greevil_whistle_toggle", "halloween_rapier"
 ];
 
+// Fix oddly priced items in 6.86c
+const COMPONENT_PRICE_ADJUST = {
+    ring_of_protection: 25,
+    boots: 50,
+    quelling_blade: 25
+};
+
 
 class Items {
     get() {
@@ -52,7 +59,11 @@ class Items {
                 if (!comp) {
                     return total;
                 }
-                return total - comp.cost;
+
+                // Update based on oddly priced products! 6.86c
+                let componentPriceAdjust = _.get(COMPONENT_PRICE_ADJUST, comp.name, 0);
+
+                return total - comp.cost - componentPriceAdjust;
             }, item.cost);
 
             // If there is a price remaining it must be for a recipe
@@ -69,7 +80,7 @@ class Items {
             delete item.notes;
             delete item.mc;
             delete item.cd;
-            delete item.cost;
+            //delete item.cost;
             delete item.created;
         });
     }

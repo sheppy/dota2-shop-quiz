@@ -83,8 +83,8 @@ function checkItems(state, guesses, components) {
 
     if (allGuessesCorrect) {
         track.event({
-            eventCategory: "Guess",
-            eventAction: "correct",
+            eventCategory: "Round",
+            eventAction: "finish",
             eventValue: itemName
         });
 
@@ -93,8 +93,8 @@ function checkItems(state, guesses, components) {
     }
 
     track.event({
-        eventCategory: "Guess",
-        eventAction: "wrong",
+        eventCategory: "Round",
+        eventAction: "incorrect",
         eventValue: itemName
     });
 
@@ -131,6 +131,10 @@ export function start(state) {
         choices: getComponentChoices(item, items, components),
         guesses: List()
     });
+
+    //if (roundItems.isEmpty()) {
+    //
+    //}
 }
 
 /**

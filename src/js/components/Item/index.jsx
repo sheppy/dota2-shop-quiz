@@ -18,7 +18,7 @@ class Item extends React.Component {
         }
 
         return (
-            <figure className={itemClass} onClick={this.props.onClick}>
+            <figure className={itemClass} onClick={this.props.onClick} title={this.props.dname}>
                 {this.props.img &&
                     <img className="Item-Image" src={"http://cdn.dota2.com/apps/dota2/images/items/" + this.props.img} alt={this.props.dname}/>
                 }

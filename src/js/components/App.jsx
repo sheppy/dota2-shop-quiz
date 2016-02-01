@@ -9,7 +9,8 @@ function mapStateToProps(state) {
         loading: state.quiz.get("loading"),
         loaded: state.quiz.get("loaded"),
         round: state.quiz.get("round"),
-        score: state.quiz.get("score")
+        score: state.quiz.get("score"),
+        flash: state.quiz.get("flash")
     };
 }
 

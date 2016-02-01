@@ -9,7 +9,8 @@ import { REQUEST_ITEMS, RECEIVE_ITEMS, SELECT_ITEM, UNSELECT_ITEM } from "../act
 // Quiz
 const INITIAL_QUIZ_STATE = Map({
     loading: false,
-    loaded: false
+    loaded: false,
+    flash: Map()
 });
 
 export function quiz(state = INITIAL_QUIZ_STATE, action = {}) {

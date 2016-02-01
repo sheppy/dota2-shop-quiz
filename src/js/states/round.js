@@ -3,6 +3,7 @@ import {List, Map} from "immutable";
 import * as track from "../core/tracking";
 
 import * as Score from "./score";
+import * as Flash from "./flash";
 
 export const NUMBER_OF_COMPONENTS = 8;
 
@@ -82,6 +83,8 @@ function checkItems(state, guesses, components) {
     let allGuessesCorrect = components.every(component => guesses.find((guess) => guess.get("name") === component));
 
     if (allGuessesCorrect) {
+        state = Flash.message(state, "Correct!");
+
         track.event({
             eventCategory: "Round",
             eventAction: "finish",
@@ -91,6 +94,8 @@ function checkItems(state, guesses, components) {
         // Start new round
         return start(Score.correct(state));
     }
+
+    state = Flash.message(state, "Incorrect!");
 
     track.event({
         eventCategory: "Round",
@@ -123,6 +128,9 @@ export function start(state) {
         eventValue: roundNumber
     });
 
+    // This clears the flash message when correct
+    //state = Flash.clear(state);
+
     // TODO: Detect when run out of items
     return state.mergeIn(["round"], {
         number: roundNumber,
@@ -147,6 +155,8 @@ export function start(state) {
 export function addItem(state, index) {
     const components = state.getIn(["round", "item", "components"]);
     const choice = state.getIn(["round", "choices", index]).set("selected", index);
+
+    state = Flash.clear(state);
 
     // Can't select a choice that is already selected
     if (state.hasIn(["round", "choices", index, "selected"])) {
@@ -183,7 +193,7 @@ export function removeItem(state, index) {
 
     const choice = state.getIn(["round", "choices", originalIndex]);
 
-    return state
+    return Flash.clear(state)
         .updateIn(["round", "guesses"], guesses => guesses.delete(guesses.indexOf(item)))
         .updateIn(["round", "choices"], choices => choices.set(originalIndex, choice.delete("selected")));
 }

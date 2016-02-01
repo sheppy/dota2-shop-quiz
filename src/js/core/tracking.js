@@ -3,7 +3,8 @@ import _ from "lodash";
 
 export function init() {
     // Only run in production
-    if (typeof IS_PROD === "undefined" || !IS_PROD) {
+    if (typeof __PRODUCTION__ === "undefined" || !__PRODUCTION__) {
+        console.info("Tracking disabled in development");
         return;
     }
 
@@ -19,7 +20,7 @@ export function init() {
 export function event(opts) {
     opts = _.assign({ hitType: "event" }, opts);
 
-    if (typeof IS_PROD === "undefined" || !IS_PROD) {
+    if (typeof __PRODUCTION__ === "undefined" || !__PRODUCTION__) {
         console.info("Track Event", opts);
         return;
     }

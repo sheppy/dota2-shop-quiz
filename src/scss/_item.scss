@@ -5,6 +5,7 @@
     margin: 10px;
     border: 2px solid $color-item-border;
     border-radius: 10px;
+    cursor: pointer;
 
     &.selected {
         opacity: 0.5;
@@ -12,6 +13,7 @@
 
     &.empty {
         opacity: 0.5;
+        cursor: default;
     }
 
     &-Image {

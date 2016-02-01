@@ -1,7 +1,7 @@
 {
   "name": "dota2-shop-quiz",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A JavaScript Dota 2 Shop Quiz",
   "main": "index.js",
   "scripts": {

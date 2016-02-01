@@ -1,0 +1,37 @@
+.FlashMessage {
+    position: fixed;
+    height: 75%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    transition: visibility 0s 2s, opacity 2s linear;
+    display: table;
+    font-size: 5vmin;
+    //display: none;
+    //visibility: hidden;
+    //opacity: 0;
+    //
+    //&.show {
+    //    visibility: visible;
+    //    opacity: 1;
+    //    display: block;
+    //}
+    //
+    &.shown {
+        visibility: hidden;
+        opacity: 0;
+        display: table;
+    }
+
+    div {
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    span {
+        padding: 0.2em;
+        background: rgba(0, 0, 0, 0.8);
+    }
+}

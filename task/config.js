@@ -19,7 +19,7 @@ const config = {
         test: "test"
     },
     file: {
-        vendorJs: "vendor.js"
+        indexJs: "index.js"
     }
 };
 

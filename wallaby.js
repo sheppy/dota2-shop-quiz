@@ -1,33 +1,30 @@
-var babelify = require("babelify");
-var wallabify = require("wallabify");
+var babel = require("babel-core");
 
-var wallabyPostprocessor = wallabify({
-    debug: true,
-    extensions: [".js", ".jsx"]
-}, function (b) {
-    return b.transform(babelify, { presets: ["es2015", "react"] });
-});
+process.env.BABEL_ENV = "test";
+
 
 module.exports = function (wallaby) {
+    var babelCompiler = wallaby.compilers.babel({
+        babel: babel,
+        sourceMap: true,
+        presets: ["es2015", "react"]
+    });
+
     return {
-        debug: true,
-
         files: [
-            { pattern: "node_modules/babel/node_modules/babel-core/browser-polyfill.js", instrument: false },
-            { pattern: "src/js/**/*.js*", load: false },
-
-            { "pattern": "test/helpers/*.js", "instrument": false }
+            { pattern: "src/js/**/*.js*", load: false }
         ],
 
         tests: [
-            { pattern: "test/**/*Spec.js", load: false }
+            "test/**/*Spec.js"
         ],
 
-        postprocessor: wallabyPostprocessor,
-        testFramework: "mocha",
+        env: {
+            type: "node"
+        },
 
-        bootstrap: function () {
-            window.__moduleBundler.loadTests();
+        compilers: {
+            "**/*.js*": babelCompiler
         }
-    }
+    };
 };
